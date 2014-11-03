@@ -1,10 +1,5 @@
-if(typeof dependencies == 'undefined') {
-	var dependencies = [];
-}
-
-if(typeof constants == 'undefined') {
-	var constants = {};
-}
+var dependencies = ['ngRoute'];
+var constants = {};
 
 var ifp = angular.module('ifp',dependencies);
 
