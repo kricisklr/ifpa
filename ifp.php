@@ -19,17 +19,26 @@ $ifp['albemarle']['floors'] = [
     [
         'name' => 'basement',
         'options' => [],
-        'file' => '',
+        'file' => null,
     ],
     [
         'name' => '1st floor',
-        'options' => [],
-        'file' => '',
+        'options' => [
+            [
+                'name' => 'Side Entry Garage',
+                'file' => null,
+            ],
+            [
+                'name' => 'Alt. Owner\'s Bathroom w/o Tub',
+                'file' => null,
+            ]
+        ],
+        'file' => null,
     ],
     [
         'name' => '2nd floor',
         'options' => [],
-        'file' => '',
+        'file' => null,
     ],
 ];
 
