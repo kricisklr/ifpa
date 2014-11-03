@@ -1,17 +1,13 @@
 var ctrlRoutes = function ctrlRoutes($routeProvider) {
 	$routeProvider.
 		when('/', {
-	        templateUrl: '/angular-views/user.html',
-	        controller: 'UserCtrl',
+	        templateUrl: '/partials/floor-plan-display.html',
+	        controller: 'DefaultCtrl'/*,
 	        resolve: {
-	        	users: function(liuUserData){
-	        		return liuUserData.getUsers();
+	        	users: function(ifpData){
+	        		return ifpData.getUsers();
 	        	}
-	        }
-		}).
-		when('/create', {
-	        templateUrl: '/angular-views/user-form.html',
-	        controller: 'UserFormCtrl'
+	        }*/
 		}).
 	    otherwise({
 	        redirectTo: '/'
@@ -43,12 +39,12 @@ ifpControllers.factory('ifpData',
 }]);
 
 ifpControllers.controller('DefaultCtrl', 
-	['$scope','$http','$rootScope','$location','users',
-  	function($scope,$http,$rootScope,$location,users) {
+	['$scope','$http','$rootScope','$location',
+  	function($scope,$http,$rootScope,$location) {
   		$rootScope.actionMenu = [
   			{'label':'Add User','url':'#/create'}
   		];
   		
-	    $scope.users = users.data;
+	    //$scope.users = users.data;
 
 }]);
