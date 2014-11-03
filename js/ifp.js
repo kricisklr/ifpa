@@ -1,4 +1,4 @@
-var dependencies = ['ngRoute'];
+var dependencies = ['ngRoute','ifpControllers'];
 var constants = {};
 
 var ifp = angular.module('ifp',dependencies);
