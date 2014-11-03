@@ -1,16 +1,16 @@
 var ctrlRoutes = function ctrlRoutes($routeProvider) {
 	$routeProvider.
-		when('/', {
+		when('/:elevation', {
 	        templateUrl: '/partials/floor-plan-display.html',
-	        controller: 'DefaultCtrl'/*,
+	        controller: 'DefaultCtrl',
 	        resolve: {
-	        	users: function(ifpData){
-	        		return ifpData.getUsers();
+	        	elevations: function(ifpData){
+	        		return ifpData.getFloorPlans();
 	        	}
-	        }*/
+	        }
 		}).
 	    otherwise({
-	        redirectTo: '/'
+	        redirectTo: '/:elevation'
 	    });  
 };
 
@@ -21,15 +21,11 @@ ifpControllers.factory('ifpData',
 	['$http','$rootScope','$q',
 	function($http,$rootScope,$q) {
 	return {
-		getUsers: function() {
-			var promise =  $http.get('/user/getUsers').success(function(data) {	
-		    	return data;
-		  	});
-		  	
-		  	return promise;
-		},
-		getMenu: function(type) {
-			var promise =  $http.get('/user/getMenu/'+type).success(function(data) {	
+		getFloorPlans: function(elevation) {
+			if(typeof elevation == 'undefined'){
+				elevation = 0;
+			}
+			var promise =  $http.get('/ifp.php?elevation='+elevation).success(function(data) {	
 		    	return data;
 		  	});
 		  	
@@ -39,12 +35,13 @@ ifpControllers.factory('ifpData',
 }]);
 
 ifpControllers.controller('DefaultCtrl', 
-	['$scope','$http','$rootScope','$location',
-  	function($scope,$http,$rootScope,$location) {
-  		$rootScope.actionMenu = [
-  			{'label':'Add User','url':'#/create'}
-  		];
+	['$scope','$http','$routeParams','$location','elevations',
+  	function($scope,$http,$routeParams,$location,elevations) {
   		
-	    //$scope.users = users.data;
+  		console.info('ifpControllers.DefaultCtrl',elevations.data,$routeParams);
+	    
+	    $scope.elevation = elevations.data[$routeParams.elevation];
+	    
+	    console.info('ifpControllers.DefaultCtrl.elevation',$scope.elevation);
 
 }]);
