@@ -62,10 +62,17 @@ ifpDirectives.directive('btHoverUnit',['$window',function($window){
     };
 }]);
 
-ifpDirectives.directive('btKeyplan',['$animate',function(){
+ifpDirectives.directive('ifpSvg',['$animate',function(){
     return function(scope,element,attr){
-        if(typeof scope.keyplan != 'undefined'){
-            var size = attr.btKeyplan;
+    	console.info('ifpDirectives.ifpSvg',scope);
+    	
+        if(typeof scope.elevation != 'undefined'){
+    		console.info('ifpDirectives.ifpSvg',scope.elevation);
+    		
+			svgdisplay = element;
+            
+            var evDisplay = Raphael(svgdisplay[0]);
+            /*var size = attr.btKeyplan;
             
             if(size == "regular") {
                 svgdisplay = element;
@@ -202,7 +209,7 @@ ifpDirectives.directive('btKeyplan',['$animate',function(){
                 else {
                         currentPath.attr( { "fill": scope.bt.getConfig().keyplanDefaultColor  } );
                 }
-           });
+           });*/
         }
     };
 }]);
