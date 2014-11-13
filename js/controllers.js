@@ -15,7 +15,7 @@ var ctrlRoutes = function ctrlRoutes($routeProvider) {
 };
 
 var ifpControllers = angular.module('ifpControllers',
-    []);
+    ['ifpDirectives']);
 
 ifpControllers.factory('ifpData', 
 	['$http','$rootScope','$q',
