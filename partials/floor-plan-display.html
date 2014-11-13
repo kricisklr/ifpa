@@ -3,7 +3,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Floors</div>				
 						<ul class="list-group">
-							<li class="list-group-item" data-ng-class="{true:'active',false:''}[floor.name == '1st floor']" data-ng-repeat="floor in elevation.floors">
+							<li class="list-group-item" data-ng-class="{true:'active',false:''}[floor.name == '1st floor']" data-ng-repeat="floor in floorplan.floors">
 								<span class="glyphicon" data-ng-class="{true:'glyphicon-check',false:'glyphicon-unchecked'}[floor.name == '1st floor']"></span> {{floor.name}}</li>
 						</ul>
 					</div>
@@ -16,5 +16,5 @@
 				</div>
 			</div>
 			<div class="col-md-9">
-				<div data-ifp-SVG></div>
+				<div data-ifp-Svg></div>
 			</div>

@@ -1,16 +1,16 @@
 var ctrlRoutes = function ctrlRoutes($routeProvider) {
 	$routeProvider.
-		when('/:elevation', {
+		when('/:floorplan', {
 	        templateUrl: '/partials/floor-plan-display.html',
 	        controller: 'DefaultCtrl',
 	        resolve: {
-	        	elevations: function(ifpData){
-	        		return ifpData.getFloorPlans();
-	        	}
+	        	floorPlan: ['$route','ifpData',function($route,ifpData){
+	        		return ifpData.getFloorPlan($route.current.params.floorplan);
+	        	}]
 	        }
 		}).
 	    otherwise({
-	        redirectTo: '/:elevation'
+	        redirectTo: '/:floorplan'
 	    });  
 };
 
@@ -18,14 +18,14 @@ var ifpControllers = angular.module('ifpControllers',
     ['ifpDirectives']);
 
 ifpControllers.factory('ifpData', 
-	['$http','$rootScope','$q',
-	function($http,$rootScope,$q) {
+	['$http','$rootScope','$q','$route',
+	function($http,$rootScope,$q,$route) {
 	return {
-		getFloorPlans: function(elevation) {
-			if(typeof elevation == 'undefined'){
-				elevation = 0;
+		getFloorPlan: function(floorplan) {
+			if(typeof floorplan == 'undefined'){
+				floorplan = 0;
 			}
-			var promise =  $http.get('/ifp.php?elevation='+elevation).success(function(data) {	
+			var promise =  $http.get('/ParseSVG.php?svg='+floorplan).success(function(data) {	
 		    	return data;
 		  	});
 		  	
@@ -35,13 +35,11 @@ ifpControllers.factory('ifpData',
 }]);
 
 ifpControllers.controller('DefaultCtrl', 
-	['$scope','$http','$routeParams','$location','elevations',
-  	function($scope,$http,$routeParams,$location,elevations) {
-  		
-  		console.info('ifpControllers.DefaultCtrl',elevations.data,$routeParams);
+	['$scope','$http','$routeParams','$location','floorPlan',
+  	function($scope,$http,$routeParams,$location,floorPlan) {
 	    
-	    $scope.elevation = elevations.data[$routeParams.elevation];
+	    $scope.floorPlan = floorPlan.data;
 	    
-	    console.info('ifpControllers.DefaultCtrl.elevation',$scope.elevation);
+	    console.info('ifpControllers.DefaultCtrl.floorPlan',$scope.floorPlan);
 
 }]);

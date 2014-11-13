@@ -66,43 +66,36 @@ ifpDirectives.directive('ifpSvg',['$animate',function(){
     return function(scope,element,attr){
     	console.info('ifpDirectives.ifpSvg',scope);
     	
-        if(typeof scope.elevation != 'undefined'){
-    		console.info('ifpDirectives.ifpSvg',scope.elevation);
+        if(typeof scope.floorPlan != 'undefined'){
+    		console.info('ifpDirectives.ifpSvg',scope.floorPlan);
     		
 			svgdisplay = element;
             
-            var evDisplay = Raphael(svgdisplay[0]);
-            /*var size = attr.btKeyplan;
+            var evDisplay = Raphael(svgdisplay[0],'100%','100%');
+            var floorplan = scope.floorPlan;
+            var hallFill = '#000000';
             
-            if(size == "regular") {
-                svgdisplay = element;
-                swidth     = 660;
-                sheight    = 431;
-            }
-            else {
-                svgdisplay =   element;
-                swidth     = 250;
-                sheight    = 162;
-            }
-            
-            var hallFill = scope.hallFill;
-                
-            var keyplan = scope.keyplan;
-            //svgdisplay.html("");
-            
-            var kpDisplay = Raphael(svgdisplay[0],swidth,sheight);
-                        
-            var inActiveAttr =  {
-                "fill"          : scope.bt.getConfigVal('keyplanOccupiedColor'),
-                "cursor"        : "pointer",
-                "stroke-width"  : "0.5"
-            };
-                                
-            var activeAttr = {
-                "fill"          : scope.bt.getConfigVal('keyplanAvailableColor'),
-                "cursor"        : "pointer",
-                "stroke-width"  : "0.5"
-            };
+            $(floorplan).each(function() {
+                if(this.type == 'polygon' || this.type == 'path' || this.type == "polyline"){
+                    var currentPath = evDisplay.path(this.points);  
+                    currentPath.attr( { "fill": this.fill, "stroke-width" : this.strokeWidth, "stroke" : this.stroke } );
+                }
+                else if(this.type == "rectangle"){
+                    var currentPath = evDisplay.rect(this.x,this.y,this.width,this.height);
+                    currentPath.attr( { "fill": this.fill, "stroke-width" : this.strokeWidth, "stroke" : this.stroke } );
+                }
+                else if(this.type == "line"){
+                    var currentPath = evDisplay.path(['M',this.x1,this.y1,'L',this.x2,this.y2]);
+                    currentPath.attr( { "fill": this.fill, "stroke-dasharray" : "0", "stroke" : "#000000" } );
+                }
+                else if(this.type == "text"){
+                    var currentPath = evDisplay.text(this.transform[4],this.transform[5],this.text);
+                    currentPath.attr({"font-family": 'Times New Roman',"font-size": '8','stroke-width': '0','stroke-opacity': '1','fill': '#000000'});
+                }   
+            });
+            evDisplay.setViewBox(0,0,400,300);
+            evDisplay.canvas.setAttribute('preserveAspectRatio', 'xMidYMid meet');;
+            /*
             
             $(keyplan.Hall).each(function() {
                 if(this.type == 'polygon' || this.type == 'path' || this.type == "polyline"){
